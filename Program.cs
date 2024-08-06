@@ -1,21 +1,53 @@
 ﻿using System;
+using System.Diagnostics;
 
-// Set console window size
-Console.SetWindowSize(80, 25);
-Console.SetBufferSize(80, 25);
+namespace ConsoleIncremental
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.SetWindowSize(80, 25);
+            Console.SetBufferSize(80, 25);
+            Console.CursorVisible = false;
 
-// Calculate center position
-int centerX = Console.WindowWidth / 2;
-int centerY = Console.WindowHeight / 2;
+            GameLogic game = new GameLogic();
+            Renderer renderer = new Renderer();
 
-// Display title
-string title = "Console Incremental";
-Console.SetCursorPosition(centerX - title.Length / 2, centerY);
-Console.ForegroundColor = ConsoleColor.Red;
-Console.WriteLine(title);
-Console.ResetColor();
+            bool running = true;
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
 
-// Wait for user to press Enter
-Console.SetCursorPosition(0, Console.WindowHeight - 1);
-Console.WriteLine("Press Enter to quit...");
-Console.ReadLine();
+            while (running)
+            {
+                double deltaTime = stopwatch.Elapsed.TotalSeconds;
+                stopwatch.Restart();
+
+                game.Update(deltaTime);
+                renderer.Render(game);
+
+                if (Console.KeyAvailable)
+                {
+                    var key = Console.ReadKey(true).Key;
+                    switch (key)
+                    {
+                        case ConsoleKey.UpArrow:
+                            game.SelectPreviousBuilding();
+                            break;
+                        case ConsoleKey.DownArrow:
+                            game.SelectNextBuilding();
+                            break;
+                        case ConsoleKey.Spacebar:
+                            game.BuyBuilding(game.SelectedBuildingIndex);
+                            break;
+                        case ConsoleKey.Escape:
+                            running = false;
+                            break;
+                    }
+                }
+
+                System.Threading.Thread.Sleep(16); // Cap at roughly 60 FPS
+            }
+        }
+    }
+}
