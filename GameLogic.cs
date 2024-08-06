@@ -58,9 +58,10 @@ namespace ConsoleIncremental
                 building.Progress += deltaTime * building.Count * building.ProgressSpeed;
                 if (building.Progress >= 1)
                 {
-                    int harvested = (int)building.CharactersPerHarvest;// * building.Count;
+                    int multiplier = (int)Math.Floor(building.Progress);
+                    int harvested = building.CharactersPerHarvest * multiplier;
                     Characters += harvested;
-                    building.Progress %= 1;
+                    building.Progress -= multiplier;
                     // TODO: Implement harvest notification
                 }
             }
