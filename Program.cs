@@ -13,12 +13,12 @@ namespace ConsoleIncremental
 
             GameLogic game = new GameLogic();
             Renderer renderer = new Renderer();
+            InputHandler inputHandler = new InputHandler();
 
-            bool running = true;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            while (running)
+            while (inputHandler.IsRunning)
             {
                 double deltaTime = stopwatch.Elapsed.TotalSeconds;
                 stopwatch.Restart();
@@ -26,34 +26,7 @@ namespace ConsoleIncremental
                 game.Update(deltaTime);
                 renderer.Render(game);
 
-                if (Console.KeyAvailable)
-                {
-                    var key = Console.ReadKey(true).Key;
-                    switch (key)
-                    {
-                        case ConsoleKey.UpArrow:
-                            game.SelectPreviousBuilding();
-                            renderer.UpdateSelection(game);
-                            break;
-                        case ConsoleKey.DownArrow:
-                            game.SelectNextBuilding();
-                            renderer.UpdateSelection(game);
-                            break;
-                        case ConsoleKey.Spacebar:
-                            if (game.IsConsoleReadKeySelected)
-                            {
-                                game.ClickConsoleReadKey();
-                            }
-                            else
-                            {
-                                game.BuyBuilding(game.SelectedBuildingIndex);
-                            }
-                            break;
-                        case ConsoleKey.Escape:
-                            running = false;
-                            break;
-                    }
-                }
+                inputHandler.HandleInput(game, renderer);
 
                 System.Threading.Thread.Sleep(16); // Cap at roughly 60 FPS
             }
