@@ -161,6 +161,16 @@ namespace ConsoleIncremental
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.Write($"Characters: {game.Characters}");
             Console.ResetColor();
+
+            // Render harvest notifications
+            for (int i = 0; i < game.RecentHarvests.Count; i++)
+            {
+                var harvest = game.RecentHarvests[i];
+                Console.SetCursorPosition(ConsoleWidth - 20, i + 3);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write($"+{harvest.HarvestedAmount} Characters".PadLeft(20));
+                Console.ResetColor();
+            }
         }
         private void RenderSelection(GameLogic game)
         {
