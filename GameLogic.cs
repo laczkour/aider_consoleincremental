@@ -19,6 +19,7 @@ namespace ConsoleIncremental
                     .WithProgress(0.0)
                     .WithCharactersPerHarvest(10)
                     .WithCost(100)
+                    .WithProgressSpeed(1.0)
                     .Build(),
                 new BuildingDto.Builder()
                     .WithName("Json.Parse")
@@ -26,6 +27,7 @@ namespace ConsoleIncremental
                     .WithProgress(0.0)
                     .WithCharactersPerHarvest(50)
                     .WithCost(500)
+                    .WithProgressSpeed(0.8)
                     .Build(),
                 new BuildingDto.Builder()
                     .WithName("ex.PrintStackTrace")
@@ -33,6 +35,7 @@ namespace ConsoleIncremental
                     .WithProgress(0.0)
                     .WithCharactersPerHarvest(100)
                     .WithCost(1000)
+                    .WithProgressSpeed(0.6)
                     .Build(),
                 new BuildingDto.Builder()
                     .WithName("Enumerable.Repeat")
@@ -40,6 +43,7 @@ namespace ConsoleIncremental
                     .WithProgress(0)
                     .WithCharactersPerHarvest(200)
                     .WithCost(2000)
+                    .WithProgressSpeed(0.4)
                     .Build()
             };
             Characters = 0;
@@ -50,10 +54,10 @@ namespace ConsoleIncremental
         {
             foreach (var building in Buildings)
             {
-                building.Progress += deltaTime * building.Count;
+                building.Progress += deltaTime * building.Count * building.ProgressSpeed;
                 if (building.Progress >= 1)
                 {
-                    int harvested = (int)(building.Progress * building.CharactersPerHarvest);
+                    int harvested = (int)building.CharactersPerHarvest * building.Count;
                     Characters += harvested;
                     building.Progress %= 1;
                     // TODO: Implement harvest notification

@@ -42,8 +42,9 @@ namespace ConsoleIncremental
                 string suffix = i == game.SelectedBuildingIndex ? " ]" : "  ";
                 string count = $"{building.Count}x".PadLeft(5);
                 string progress = RenderProgressBar(building.Progress, 20);
+                string speed = $"{building.ProgressSpeed:F2}x".PadLeft(6);
                 Console.SetCursorPosition(22, i + 1);
-                Console.Write($"{count}    |{progress}|{suffix}");
+                Console.Write($"{count}    |{progress}| {speed}{suffix}");
                 Console.SetCursorPosition(0, i + 1);
                 Console.Write(prefix);
             }

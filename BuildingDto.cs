@@ -9,6 +9,7 @@ namespace ConsoleIncremental
         public double Progress { get; set; }
         public int CharactersPerHarvest { get; private set; }
         public int Cost { get; set; }
+        public double ProgressSpeed { get; private set; }
 
         private BuildingDto() { }
 
@@ -43,6 +44,12 @@ namespace ConsoleIncremental
             public Builder WithCost(int cost)
             {
                 building.Cost = cost;
+                return this;
+            }
+
+            public Builder WithProgressSpeed(double progressSpeed)
+            {
+                building.ProgressSpeed = progressSpeed;
                 return this;
             }
 
