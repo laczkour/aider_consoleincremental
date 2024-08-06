@@ -84,10 +84,14 @@ namespace ConsoleIncremental
 
         public void SelectPreviousBuilding()
         {
-            if (IsConsoleReadKeySelected)
+            if (SelectedBuildingIndex == 0 && !IsConsoleReadKeySelected)
+            {
+                IsConsoleReadKeySelected = true;
+            }
+            else if (IsConsoleReadKeySelected)
             {
                 IsConsoleReadKeySelected = false;
-                SelectedBuildingIndex = 0;
+                SelectedBuildingIndex = Buildings.Count - 1;
             }
             else
             {
@@ -97,13 +101,17 @@ namespace ConsoleIncremental
 
         public void SelectNextBuilding()
         {
-            if (SelectedBuildingIndex == 0 && !IsConsoleReadKeySelected)
+            if (IsConsoleReadKeySelected)
+            {
+                IsConsoleReadKeySelected = false;
+                SelectedBuildingIndex = 0;
+            }
+            else if (SelectedBuildingIndex == Buildings.Count - 1)
             {
                 IsConsoleReadKeySelected = true;
             }
             else
             {
-                IsConsoleReadKeySelected = false;
                 SelectedBuildingIndex = (SelectedBuildingIndex + 1) % Buildings.Count;
             }
         }
