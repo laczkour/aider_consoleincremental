@@ -33,7 +33,7 @@ namespace ConsoleIncremental
             }
         }
 
-        private const double FastHarvestThreshold = 0.1; // Threshold for fast harvesting
+        private const double FastHarvestThreshold = 1; // Threshold for fast harvesting
         private int animationFrame = 0;
 
         private void RenderBuildingProgress(GameLogic game)

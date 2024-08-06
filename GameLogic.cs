@@ -46,7 +46,7 @@ namespace ConsoleIncremental
                     .WithProgressSpeed(0.4)
                     .Build()
             };
-            Characters = 0;
+            Characters = 2000;
             SelectedBuildingIndex = 0; // Console.WriteLine is selected initially
         }
 
