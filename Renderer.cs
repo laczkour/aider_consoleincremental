@@ -25,7 +25,7 @@ namespace ConsoleIncremental
                 string name = building.Name.PadRight(20);
                 string count = $"{building.Count}x".PadLeft(5);
                 string progress = RenderProgressBar(building.Progress, 20);
-                Console.SetCursorPosition(0, i * 3);
+                Console.SetCursorPosition(0, i + 1);
                 Console.Write($"{prefix}{name}{count}    |{progress}|{suffix}");
             }
         }
