@@ -52,7 +52,6 @@ namespace ConsoleIncremental
         {
             Console.SetCursorPosition(24, 1);
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("Click to get 1 Character".PadRight(29));
             Console.ResetColor();
 
             for (int i = 0; i < game.Buildings.Count; i++)
