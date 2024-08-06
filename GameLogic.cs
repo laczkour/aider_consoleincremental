@@ -18,7 +18,7 @@ namespace ConsoleIncremental
                     .WithName("Console.WriteLine")
                     .WithCount(1)
                     .WithProgress(0.0)
-                    .WithCharactersPerHarvest(10)
+                    .WithCharactersPerHarvest(1)
                     .WithCost(100)
                     .WithProgressSpeed(1.0)
                     .Build(),
@@ -26,25 +26,25 @@ namespace ConsoleIncremental
                     .WithName("Json.Parse")
                     .WithCount(0)
                     .WithProgress(0.0)
-                    .WithCharactersPerHarvest(50)
+                    .WithCharactersPerHarvest(40)
                     .WithCost(500)
-                    .WithProgressSpeed(0.8)
+                    .WithProgressSpeed(0.2)
                     .Build(),
                 new BuildingDto.Builder()
                     .WithName("ex.PrintStackTrace")
                     .WithCount(0)
                     .WithProgress(0.0)
-                    .WithCharactersPerHarvest(100)
+                    .WithCharactersPerHarvest(200)
                     .WithCost(1000)
-                    .WithProgressSpeed(0.6)
+                    .WithProgressSpeed(0.1)
                     .Build(),
                 new BuildingDto.Builder()
                     .WithName("Enumerable.Repeat")
                     .WithCount(0)
                     .WithProgress(0)
-                    .WithCharactersPerHarvest(200)
+                    .WithCharactersPerHarvest(2000)
                     .WithCost(2000)
-                    .WithProgressSpeed(0.4)
+                    .WithProgressSpeed(0.01)
                     .Build()
             };
             Characters = 2000;
@@ -58,7 +58,7 @@ namespace ConsoleIncremental
                 building.Progress += deltaTime * building.Count * building.ProgressSpeed;
                 if (building.Progress >= 1)
                 {
-                    int harvested = (int)building.CharactersPerHarvest * building.Count;
+                    int harvested = (int)building.CharactersPerHarvest;// * building.Count;
                     Characters += harvested;
                     building.Progress %= 1;
                     // TODO: Implement harvest notification
