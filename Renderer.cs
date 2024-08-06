@@ -35,7 +35,9 @@ namespace ConsoleIncremental
                 var building = game.Buildings[i];
                 string name = building.Name.PadRight(20);
                 Console.SetCursorPosition(0, i + 2);
-                Console.Write($"  {name}");
+                prefix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? "[ " : "  ";
+                suffix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? " ]" : "  ";
+                Console.Write($"{prefix}{name}{suffix}");
             }
         }
 
