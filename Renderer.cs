@@ -33,6 +33,9 @@ namespace ConsoleIncremental
             }
         }
 
+        private const double FastHarvestThreshold = 0.1; // Threshold for fast harvesting
+        private int animationFrame = 0;
+
         private void RenderBuildingProgress(GameLogic game)
         {
             for (int i = 0; i < game.Buildings.Count; i++)
@@ -41,19 +44,34 @@ namespace ConsoleIncremental
                 string prefix = i == game.SelectedBuildingIndex ? "[ " : "  ";
                 string suffix = i == game.SelectedBuildingIndex ? " ]" : "  ";
                 string count = $"{building.Count}x".PadLeft(5);
-                string progress = RenderProgressBar(building.Progress, 20);
-                string speed = $"{building.ProgressSpeed:F2}x".PadLeft(6);
+                string progress = RenderProgressBar(building, 20);
                 Console.SetCursorPosition(22, i + 1);
-                Console.Write($"{count}    |{progress}| {speed}{suffix}");
+                Console.Write($"{count}    |{progress}|{suffix}");
                 Console.SetCursorPosition(0, i + 1);
                 Console.Write(prefix);
             }
+            animationFrame = (animationFrame + 1) % 4; // Update animation frame
         }
 
-        private string RenderProgressBar(double progress, int width)
+        private string RenderProgressBar(BuildingDto building, int width)
         {
-            int filledWidth = (int)(progress * width);
-            return new string('#', filledWidth) + new string('-', width - filledWidth);
+            if (building.ProgressSpeed * building.Count > FastHarvestThreshold)
+            {
+                return RenderFlowingAnimation(width);
+            }
+            else
+            {
+                int filledWidth = (int)(building.Progress * width);
+                return new string('#', filledWidth) + new string('-', width - filledWidth);
+            }
+        }
+
+        private string RenderFlowingAnimation(int width)
+        {
+            string[] frames = { ">---", "->--", "-->-", "--->", "----" };
+            string baseBar = new string('-', width);
+            int startIndex = animationFrame * (width / 4);
+            return baseBar.Substring(0, startIndex) + frames[animationFrame] + baseBar.Substring(startIndex + 4);
         }
 
         private void RenderBuyOption(GameLogic game)
