@@ -13,10 +13,34 @@ namespace ConsoleIncremental
         {
             Buildings = new List<BuildingDto>
             {
-                new BuildingDto("Console.WriteLine", 1, 0.4, 10, 100),
-                new BuildingDto("Json.Parse", 0, 0.8, 50, 500),
-                new BuildingDto("ex.PrintStackTrace", 0, 0.4, 100, 1000),
-                new BuildingDto("Enumerable.Repeat", 0, 0, 200, 2000)
+                new BuildingDto.Builder()
+                    .WithName("Console.WriteLine")
+                    .WithCount(1)
+                    .WithProgress(0.4)
+                    .WithCharactersPerHarvest(10)
+                    .WithCost(100)
+                    .Build(),
+                new BuildingDto.Builder()
+                    .WithName("Json.Parse")
+                    .WithCount(0)
+                    .WithProgress(0.8)
+                    .WithCharactersPerHarvest(50)
+                    .WithCost(500)
+                    .Build(),
+                new BuildingDto.Builder()
+                    .WithName("ex.PrintStackTrace")
+                    .WithCount(0)
+                    .WithProgress(0.4)
+                    .WithCharactersPerHarvest(100)
+                    .WithCost(1000)
+                    .Build(),
+                new BuildingDto.Builder()
+                    .WithName("Enumerable.Repeat")
+                    .WithCount(0)
+                    .WithProgress(0)
+                    .WithCharactersPerHarvest(200)
+                    .WithCost(2000)
+                    .Build()
             };
             Characters = 0;
             SelectedBuildingIndex = 0; // Console.WriteLine is selected initially
