@@ -138,25 +138,24 @@ namespace ConsoleIncremental
             Console.Write($"Characters: {game.Characters}");
             Console.ResetColor();
         }
-    }
-
-    private void RenderSelection(GameLogic game)
-    {
-        Console.SetCursorPosition(0, 1);
-        string prefix = game.IsConsoleReadKeySelected ? "[ " : "  ";
-        string suffix = game.IsConsoleReadKeySelected ? " ]" : "  ";
-        Console.Write(prefix);
-        Console.SetCursorPosition(22, 1);
-        Console.Write(suffix);
-
-        for (int i = 0; i < game.Buildings.Count; i++)
+        private void RenderSelection(GameLogic game)
         {
-            Console.SetCursorPosition(0, i + 2);
-            prefix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? "[ " : "  ";
-            suffix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? " ]" : "  ";
+            Console.SetCursorPosition(0, 1);
+            string prefix = game.IsConsoleReadKeySelected ? "[ " : "  ";
+            string suffix = game.IsConsoleReadKeySelected ? " ]" : "  ";
             Console.Write(prefix);
-            Console.SetCursorPosition(22, i + 2);
+            Console.SetCursorPosition(22, 1);
             Console.Write(suffix);
+
+            for (int i = 0; i < game.Buildings.Count; i++)
+            {
+                Console.SetCursorPosition(0, i + 2);
+                prefix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? "[ " : "  ";
+                suffix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? " ]" : "  ";
+                Console.Write(prefix);
+                Console.SetCursorPosition(22, i + 2);
+                Console.Write(suffix);
+            }
         }
     }
 }
