@@ -71,8 +71,9 @@ namespace ConsoleIncremental
                     Characters += harvested;
                     building.Progress -= multiplier;
                     LastHarvestWasOdd[building.Name] = !LastHarvestWasOdd[building.Name];
+                    RecentHarvests = RecentHarvests.Where(hn => hn.BuildingName != building.Name).ToList();
                     RecentHarvests.Add(new HarvestNotification(building.Name, harvested, LastHarvestWasOdd[building.Name]));
-                    if (RecentHarvests.Count > 5)
+                    if (RecentHarvests.Count > 10)
                     {
                         RecentHarvests.RemoveAt(0);
                     }
