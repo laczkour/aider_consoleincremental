@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 
 namespace ConsoleIncremental
 {
@@ -34,7 +35,9 @@ namespace ConsoleIncremental
         }
 
         private const double FastHarvestThreshold = 1; // Threshold for fast harvesting
-        private int animationFrame = 0;
+        private const int FlowAnimationFrameOffsetX = 4;
+        private int FlowAnimationFrameOffset = 0;
+        private int flowAnimationFrame = 0;
 
         private void RenderBuildingProgress(GameLogic game)
         {
@@ -50,7 +53,11 @@ namespace ConsoleIncremental
                 Console.SetCursorPosition(0, i + 1);
                 Console.Write(prefix);
             }
-            animationFrame = (animationFrame + 1) % 4; // Update animation frame
+            if (++FlowAnimationFrameOffset > FlowAnimationFrameOffsetX)
+            {
+                FlowAnimationFrameOffset = 0;
+                flowAnimationFrame = (flowAnimationFrame + 1) % 4; 
+            }
         }
 
         private string RenderProgressBar(BuildingDto building, int width)
@@ -68,10 +75,12 @@ namespace ConsoleIncremental
 
         private string RenderFlowingAnimation(int width)
         {
-            string[] frames = { ">---", "->--", "-->-", "--->", "----" };
-            string baseBar = new string('-', width);
-            int startIndex = animationFrame * (width / 4);
-            return baseBar.Substring(0, startIndex) + frames[animationFrame] + baseBar.Substring(startIndex + 4);
+            string frame = "-<=>";
+            return frame;
+            //string[] frames = { ">---", "->--", "-->-", "--->", "----" };
+            //string baseBar = new string('-', width);
+            //int startIndex = flowAnimationFrame * (width / 4);
+            //return baseBar.Substring(0, startIndex) + frames[flowAnimationFrame] + baseBar.Substring(startIndex + 4);
         }
 
         private void RenderBuyOption(GameLogic game)
