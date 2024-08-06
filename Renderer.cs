@@ -25,7 +25,7 @@ namespace ConsoleIncremental
                 string name = building.Name.PadRight(20);
                 string count = $"{building.Count}x".PadLeft(5);
                 string progress = RenderProgressBar(building.Progress, 20);
-                Console.SetCursorPosition(0, i * 2);
+                Console.SetCursorPosition(0, i * 3);
                 Console.Write($"{prefix}{name}{count}    |{progress}|{suffix}");
             }
         }
@@ -39,7 +39,7 @@ namespace ConsoleIncremental
         private void RenderBuyOption(GameLogic game)
         {
             var selectedBuilding = game.Buildings[game.SelectedBuildingIndex];
-            Console.SetCursorPosition(0, ConsoleHeight - 3);
+            Console.SetCursorPosition(0, ConsoleHeight - 4);
             Console.WriteLine($"Buy 1 {selectedBuilding.Name.PadRight(20)} {selectedBuilding.Cost} Characters");
         }
 
