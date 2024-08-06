@@ -35,8 +35,8 @@ namespace ConsoleIncremental
         }
 
         private const double FastHarvestThreshold = 10; // Threshold for fast harvesting
-        private const int FlowAnimationFrameOffsetX = 4;
-        private int FlowAnimationFrameOffset = 0;
+        private const int FlowAnimationUpdateInterval = 4;
+        private int flowAnimationUpdateCounter = 0;
         private int flowAnimationFrame = 0;
 
         private void RenderBuildingProgress(GameLogic game)
@@ -53,9 +53,9 @@ namespace ConsoleIncremental
                 Console.SetCursorPosition(0, i + 1);
                 Console.Write(prefix);
             }
-            if (++FlowAnimationFrameOffset > FlowAnimationFrameOffsetX)
+            if (++flowAnimationUpdateCounter >= FlowAnimationUpdateInterval)
             {
-                FlowAnimationFrameOffset = 0;
+                flowAnimationUpdateCounter = 0;
                 flowAnimationFrame = (flowAnimationFrame + 1) % 4; 
             }
         }
