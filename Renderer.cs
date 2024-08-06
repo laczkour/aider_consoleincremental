@@ -7,26 +7,45 @@ namespace ConsoleIncremental
         private const int ConsoleWidth = 80;
         private const int ConsoleHeight = 25;
 
+        private bool isFirstRender = true;
+
         public void Render(GameLogic game)
         {
-            Console.Clear();
-            RenderBuildings(game);
+            if (isFirstRender)
+            {
+                Console.Clear();
+                RenderBuildingNames(game);
+                isFirstRender = false;
+            }
+            RenderBuildingProgress(game);
             RenderBuyOption(game);
             RenderCharacters(game);
         }
 
-        private void RenderBuildings(GameLogic game)
+        private void RenderBuildingNames(GameLogic game)
+        {
+            for (int i = 0; i < game.Buildings.Count; i++)
+            {
+                var building = game.Buildings[i];
+                string name = building.Name.PadRight(20);
+                Console.SetCursorPosition(0, i + 1);
+                Console.Write($"  {name}");
+            }
+        }
+
+        private void RenderBuildingProgress(GameLogic game)
         {
             for (int i = 0; i < game.Buildings.Count; i++)
             {
                 var building = game.Buildings[i];
                 string prefix = i == game.SelectedBuildingIndex ? "[ " : "  ";
                 string suffix = i == game.SelectedBuildingIndex ? " ]" : "  ";
-                string name = building.Name.PadRight(20);
                 string count = $"{building.Count}x".PadLeft(5);
                 string progress = RenderProgressBar(building.Progress, 20);
+                Console.SetCursorPosition(22, i + 1);
+                Console.Write($"{count}    |{progress}|{suffix}");
                 Console.SetCursorPosition(0, i + 1);
-                Console.Write($"{prefix}{name}{count}    |{progress}|{suffix}");
+                Console.Write(prefix);
             }
         }
 
@@ -40,13 +59,17 @@ namespace ConsoleIncremental
         {
             var selectedBuilding = game.Buildings[game.SelectedBuildingIndex];
             Console.SetCursorPosition(0, ConsoleHeight - 4);
-            Console.WriteLine($"Buy 1 {selectedBuilding.Name.PadRight(20)} {selectedBuilding.Cost} Characters");
+            Console.Write(new string(' ', ConsoleWidth)); // Clear the line
+            Console.SetCursorPosition(0, ConsoleHeight - 4);
+            Console.Write($"Buy 1 {selectedBuilding.Name.PadRight(20)} {selectedBuilding.Cost} Characters");
         }
 
         private void RenderCharacters(GameLogic game)
         {
             Console.SetCursorPosition(0, ConsoleHeight - 1);
-            Console.WriteLine($"Characters: {game.Characters}");
+            Console.Write(new string(' ', ConsoleWidth)); // Clear the line
+            Console.SetCursorPosition(0, ConsoleHeight - 1);
+            Console.Write($"Characters: {game.Characters}");
         }
     }
 }
