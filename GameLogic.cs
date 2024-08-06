@@ -19,7 +19,7 @@ namespace ConsoleIncremental
                 new BuildingDto("Enumerable.Repeat", 0, 0, 200, 2000)
             };
             Characters = 0;
-            SelectedBuildingIndex = 1; // Json.Parse is selected initially
+            SelectedBuildingIndex = 0; // Console.WriteLine is selected initially
         }
 
         public void Update(double deltaTime)
