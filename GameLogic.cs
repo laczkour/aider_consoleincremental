@@ -10,6 +10,7 @@ namespace ConsoleIncremental
         public int SelectedBuildingIndex { get; private set; }
         public bool IsConsoleReadKeySelected { get; private set; }
         public List<HarvestNotification> RecentHarvests { get; private set; }
+        private Dictionary<string, bool> LastHarvestWasOdd { get; set; }
 
         public GameLogic()
         {
@@ -51,6 +52,11 @@ namespace ConsoleIncremental
             Characters = 2000;
             SelectedBuildingIndex = 0; // Console.WriteLine is selected initially
             RecentHarvests = new List<HarvestNotification>();
+            LastHarvestWasOdd = new Dictionary<string, bool>();
+            foreach (var building in Buildings)
+            {
+                LastHarvestWasOdd[building.Name] = false;
+            }
         }
 
         public void Update(double deltaTime)
@@ -64,7 +70,8 @@ namespace ConsoleIncremental
                     int harvested = building.CharactersPerHarvest * multiplier;
                     Characters += harvested;
                     building.Progress -= multiplier;
-                    RecentHarvests.Add(new HarvestNotification(building.Name, harvested));
+                    LastHarvestWasOdd[building.Name] = !LastHarvestWasOdd[building.Name];
+                    RecentHarvests.Add(new HarvestNotification(building.Name, harvested, LastHarvestWasOdd[building.Name]));
                     if (RecentHarvests.Count > 5)
                     {
                         RecentHarvests.RemoveAt(0);
@@ -147,12 +154,14 @@ namespace ConsoleIncremental
         public string BuildingName { get; }
         public int HarvestedAmount { get; }
         public double TimeRemaining { get; set; }
+        public bool IsOdd { get; }
 
-        public HarvestNotification(string buildingName, int harvestedAmount)
+        public HarvestNotification(string buildingName, int harvestedAmount, bool isOdd)
         {
             BuildingName = buildingName;
             HarvestedAmount = harvestedAmount;
             TimeRemaining = 3.0; // Display for 3 seconds
+            IsOdd = isOdd;
         }
     }
 }

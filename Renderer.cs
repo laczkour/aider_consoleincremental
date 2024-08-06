@@ -98,7 +98,7 @@ namespace ConsoleIncremental
                 if (harvest != null)
                 {
                     Console.SetCursorPosition(59, i + 3);
-                    Console.ForegroundColor = i % 2 == 0 ? ConsoleColor.Yellow : ConsoleColor.Green;
+                    Console.ForegroundColor = harvest.IsOdd ? ConsoleColor.Yellow : ConsoleColor.Green;
                     Console.Write($" +{harvest.HarvestedAmount}");
                     Console.ResetColor();
                 }
