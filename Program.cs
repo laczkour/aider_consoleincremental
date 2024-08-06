@@ -38,7 +38,14 @@ namespace ConsoleIncremental
                             game.SelectNextBuilding();
                             break;
                         case ConsoleKey.Spacebar:
-                            game.BuyBuilding(game.SelectedBuildingIndex);
+                            if (game.IsConsoleReadKeySelected)
+                            {
+                                game.ClickConsoleReadKey();
+                            }
+                            else
+                            {
+                                game.BuyBuilding(game.SelectedBuildingIndex);
+                            }
                             break;
                         case ConsoleKey.Escape:
                             running = false;

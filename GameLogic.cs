@@ -8,6 +8,7 @@ namespace ConsoleIncremental
         public List<BuildingDto> Buildings { get; private set; }
         public int Characters { get; private set; }
         public int SelectedBuildingIndex { get; private set; }
+        public bool IsConsoleReadKeySelected { get; private set; }
 
         public GameLogic()
         {
@@ -88,7 +89,36 @@ namespace ConsoleIncremental
 
         public void SelectPreviousBuilding()
         {
-            SelectedBuildingIndex = (SelectedBuildingIndex - 1 + Buildings.Count) % Buildings.Count;
+            if (IsConsoleReadKeySelected)
+            {
+                IsConsoleReadKeySelected = false;
+                SelectedBuildingIndex = 0;
+            }
+            else
+            {
+                SelectedBuildingIndex = (SelectedBuildingIndex - 1 + Buildings.Count) % Buildings.Count;
+            }
+        }
+
+        public void SelectNextBuilding()
+        {
+            if (SelectedBuildingIndex == 0 && !IsConsoleReadKeySelected)
+            {
+                IsConsoleReadKeySelected = true;
+            }
+            else
+            {
+                IsConsoleReadKeySelected = false;
+                SelectedBuildingIndex = (SelectedBuildingIndex + 1) % Buildings.Count;
+            }
+        }
+
+        public void ClickConsoleReadKey()
+        {
+            if (IsConsoleReadKeySelected)
+            {
+                Characters++;
+            }
         }
     }
 }

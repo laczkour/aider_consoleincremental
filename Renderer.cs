@@ -25,11 +25,16 @@ namespace ConsoleIncremental
 
         private void RenderBuildingNames(GameLogic game)
         {
+            Console.SetCursorPosition(0, 1);
+            string prefix = game.IsConsoleReadKeySelected ? "[ " : "  ";
+            string suffix = game.IsConsoleReadKeySelected ? " ]" : "  ";
+            Console.Write($"{prefix}Console.ReadKey{suffix}");
+
             for (int i = 0; i < game.Buildings.Count; i++)
             {
                 var building = game.Buildings[i];
                 string name = building.Name.PadRight(20);
-                Console.SetCursorPosition(0, i + 1);
+                Console.SetCursorPosition(0, i + 2);
                 Console.Write($"  {name}");
             }
         }
@@ -41,16 +46,19 @@ namespace ConsoleIncremental
 
         private void RenderBuildingProgress(GameLogic game)
         {
+            Console.SetCursorPosition(22, 1);
+            Console.Write("Click to get 1 Character".PadRight(31));
+
             for (int i = 0; i < game.Buildings.Count; i++)
             {
                 var building = game.Buildings[i];
-                string prefix = i == game.SelectedBuildingIndex ? "[ " : "  ";
-                string suffix = i == game.SelectedBuildingIndex ? " ]" : "  ";
+                string prefix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? "[ " : "  ";
+                string suffix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? " ]" : "  ";
                 string count = $"{building.Count}x".PadLeft(5);
                 string progress = RenderProgressBar(building, 20);
-                Console.SetCursorPosition(22, i + 1);
+                Console.SetCursorPosition(22, i + 2);
                 Console.Write($"{count}    |{progress}|{suffix}");
-                Console.SetCursorPosition(0, i + 1);
+                Console.SetCursorPosition(0, i + 2);
                 Console.Write(prefix);
             }
             if (++flowAnimationUpdateCounter >= FlowAnimationUpdateInterval)
