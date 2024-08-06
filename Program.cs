@@ -11,7 +11,9 @@ int centerY = Console.WindowHeight / 2;
 // Display title
 string title = "Console Incremental";
 Console.SetCursorPosition(centerX - title.Length / 2, centerY);
+Console.ForegroundColor = ConsoleColor.Red;
 Console.WriteLine(title);
+Console.ResetColor();
 
 // Wait for user to press Enter
 Console.SetCursorPosition(0, Console.WindowHeight - 1);
