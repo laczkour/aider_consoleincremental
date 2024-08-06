@@ -82,11 +82,6 @@ namespace ConsoleIncremental
             return false;
         }
 
-        public void SelectNextBuilding()
-        {
-            SelectedBuildingIndex = (SelectedBuildingIndex + 1) % Buildings.Count;
-        }
-
         public void SelectPreviousBuilding()
         {
             if (IsConsoleReadKeySelected)
