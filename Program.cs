@@ -33,9 +33,11 @@ namespace ConsoleIncremental
                     {
                         case ConsoleKey.UpArrow:
                             game.SelectPreviousBuilding();
+                            renderer.UpdateSelection(game);
                             break;
                         case ConsoleKey.DownArrow:
                             game.SelectNextBuilding();
+                            renderer.UpdateSelection(game);
                             break;
                         case ConsoleKey.Spacebar:
                             if (game.IsConsoleReadKeySelected)

@@ -16,6 +16,7 @@ namespace ConsoleIncremental
             {
                 Console.Clear();
                 RenderBuildingNames(game);
+                RenderSelection(game);
                 isFirstRender = false;
             }
             RenderBuildingProgress(game);
@@ -23,25 +24,22 @@ namespace ConsoleIncremental
             RenderCharacters(game);
         }
 
+        public void UpdateSelection(GameLogic game)
+        {
+            RenderSelection(game);
+        }
+
         private void RenderBuildingNames(GameLogic game)
         {
-            Console.SetCursorPosition(0, 1);
-            string prefix = game.IsConsoleReadKeySelected ? "[ " : "  ";
-            string suffix = game.IsConsoleReadKeySelected ? " ]" : "  ";
-            Console.ForegroundColor = game.IsConsoleReadKeySelected ? ConsoleColor.Yellow : ConsoleColor.White;
-            Console.Write($"{prefix}Console.ReadKey{suffix}");
-            Console.ResetColor();
+            Console.SetCursorPosition(2, 1);
+            Console.Write("Console.ReadKey".PadRight(20));
 
             for (int i = 0; i < game.Buildings.Count; i++)
             {
                 var building = game.Buildings[i];
                 string name = building.Name.PadRight(20);
-                Console.SetCursorPosition(0, i + 2);
-                prefix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? "[ " : "  ";
-                suffix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? " ]" : "  ";
-                Console.ForegroundColor = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? ConsoleColor.Yellow : ConsoleColor.White;
-                Console.Write($"{prefix}{name}{suffix}");
-                Console.ResetColor();
+                Console.SetCursorPosition(2, i + 2);
+                Console.Write(name);
             }
         }
 
@@ -52,28 +50,24 @@ namespace ConsoleIncremental
 
         private void RenderBuildingProgress(GameLogic game)
         {
-            Console.SetCursorPosition(22, 1);
+            Console.SetCursorPosition(24, 1);
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("Click to get 1 Character".PadRight(31));
+            Console.Write("Click to get 1 Character".PadRight(29));
             Console.ResetColor();
 
             for (int i = 0; i < game.Buildings.Count; i++)
             {
                 var building = game.Buildings[i];
-                string prefix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? "[ " : "  ";
-                string suffix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? " ]" : "  ";
                 string count = $"{building.Count}x".PadLeft(5);
                 string progress = RenderProgressBar(building, 20);
-                Console.SetCursorPosition(22, i + 2);
+                Console.SetCursorPosition(24, i + 2);
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write($"{count}    |");
                 Console.ResetColor();
                 Console.Write(progress);
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write($"|{suffix}");
+                Console.Write("|");
                 Console.ResetColor();
-                Console.SetCursorPosition(0, i + 2);
-                Console.Write(prefix);
             }
             if (++flowAnimationUpdateCounter >= FlowAnimationUpdateInterval)
             {
@@ -143,6 +137,26 @@ namespace ConsoleIncremental
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.Write($"Characters: {game.Characters}");
             Console.ResetColor();
+        }
+    }
+
+    private void RenderSelection(GameLogic game)
+    {
+        Console.SetCursorPosition(0, 1);
+        string prefix = game.IsConsoleReadKeySelected ? "[ " : "  ";
+        string suffix = game.IsConsoleReadKeySelected ? " ]" : "  ";
+        Console.Write(prefix);
+        Console.SetCursorPosition(22, 1);
+        Console.Write(suffix);
+
+        for (int i = 0; i < game.Buildings.Count; i++)
+        {
+            Console.SetCursorPosition(0, i + 2);
+            prefix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? "[ " : "  ";
+            suffix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? " ]" : "  ";
+            Console.Write(prefix);
+            Console.SetCursorPosition(22, i + 2);
+            Console.Write(suffix);
         }
     }
 }
