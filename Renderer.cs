@@ -34,7 +34,7 @@ namespace ConsoleIncremental
             }
         }
 
-        private const double FastHarvestThreshold = 1; // Threshold for fast harvesting
+        private const double FastHarvestThreshold = 10; // Threshold for fast harvesting
         private const int FlowAnimationFrameOffsetX = 4;
         private int FlowAnimationFrameOffset = 0;
         private int flowAnimationFrame = 0;
@@ -75,7 +75,7 @@ namespace ConsoleIncremental
 
         private string RenderFlowingAnimation(int width)
         {
-            string frame = "-<=>";
+            string frame = "-####";
             int frameLength = frame.Length;
             int startIndex = flowAnimationFrame % frameLength;
             string result = "";
