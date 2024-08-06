@@ -92,6 +92,15 @@ namespace ConsoleIncremental
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("|");
                 Console.ResetColor();
+
+                // Render harvest notification
+                var harvest = game.RecentHarvests.FirstOrDefault(h => h.BuildingName == building.Name);
+                if (harvest != null)
+                {
+                    Console.ForegroundColor = i % 2 == 0 ? ConsoleColor.Yellow : ConsoleColor.DarkYellow;
+                    Console.Write($" +{harvest.HarvestedAmount}");
+                    Console.ResetColor();
+                }
             }
             if (++flowAnimationUpdateCounter >= FlowAnimationUpdateInterval)
             {
@@ -161,16 +170,6 @@ namespace ConsoleIncremental
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.Write($"Characters: {game.Characters}");
             Console.ResetColor();
-
-            // Render harvest notifications
-            for (int i = 0; i < game.RecentHarvests.Count; i++)
-            {
-                var harvest = game.RecentHarvests[i];
-                Console.SetCursorPosition(ConsoleWidth - 20, i + 3);
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write($"+{harvest.HarvestedAmount} Characters".PadLeft(20));
-                Console.ResetColor();
-            }
         }
         private void RenderSelection(GameLogic game)
         {
