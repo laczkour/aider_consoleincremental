@@ -76,11 +76,14 @@ namespace ConsoleIncremental
         private string RenderFlowingAnimation(int width)
         {
             string frame = "-<=>";
-            return frame;
-            //string[] frames = { ">---", "->--", "-->-", "--->", "----" };
-            //string baseBar = new string('-', width);
-            //int startIndex = flowAnimationFrame * (width / 4);
-            //return baseBar.Substring(0, startIndex) + frames[flowAnimationFrame] + baseBar.Substring(startIndex + 4);
+            int frameLength = frame.Length;
+            int startIndex = flowAnimationFrame % frameLength;
+            string result = "";
+            for (int i = 0; i < width; i++)
+            {
+                result += frame[(startIndex + i) % frameLength];
+            }
+            return result;
         }
 
         private void RenderBuyOption(GameLogic game)
