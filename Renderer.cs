@@ -97,7 +97,8 @@ namespace ConsoleIncremental
                 var harvest = game.RecentHarvests.FirstOrDefault(h => h.BuildingName == building.Name);
                 if (harvest != null)
                 {
-                    Console.ForegroundColor = i % 2 == 0 ? ConsoleColor.Yellow : ConsoleColor.DarkYellow;
+                    Console.SetCursorPosition(59, i + 3);
+                    Console.ForegroundColor = i % 2 == 0 ? ConsoleColor.Yellow : ConsoleColor.Green;
                     Console.Write($" +{harvest.HarvestedAmount}");
                     Console.ResetColor();
                 }
