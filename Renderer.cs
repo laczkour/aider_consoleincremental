@@ -28,7 +28,9 @@ namespace ConsoleIncremental
             Console.SetCursorPosition(0, 1);
             string prefix = game.IsConsoleReadKeySelected ? "[ " : "  ";
             string suffix = game.IsConsoleReadKeySelected ? " ]" : "  ";
+            Console.ForegroundColor = game.IsConsoleReadKeySelected ? ConsoleColor.Yellow : ConsoleColor.White;
             Console.Write($"{prefix}Console.ReadKey{suffix}");
+            Console.ResetColor();
 
             for (int i = 0; i < game.Buildings.Count; i++)
             {
@@ -37,7 +39,9 @@ namespace ConsoleIncremental
                 Console.SetCursorPosition(0, i + 2);
                 prefix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? "[ " : "  ";
                 suffix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? " ]" : "  ";
+                Console.ForegroundColor = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? ConsoleColor.Yellow : ConsoleColor.White;
                 Console.Write($"{prefix}{name}{suffix}");
+                Console.ResetColor();
             }
         }
 
@@ -49,7 +53,9 @@ namespace ConsoleIncremental
         private void RenderBuildingProgress(GameLogic game)
         {
             Console.SetCursorPosition(22, 1);
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write("Click to get 1 Character".PadRight(31));
+            Console.ResetColor();
 
             for (int i = 0; i < game.Buildings.Count; i++)
             {
@@ -59,7 +65,13 @@ namespace ConsoleIncremental
                 string count = $"{building.Count}x".PadLeft(5);
                 string progress = RenderProgressBar(building, 20);
                 Console.SetCursorPosition(22, i + 2);
-                Console.Write($"{count}    |{progress}|{suffix}");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($"{count}    |");
+                Console.ResetColor();
+                Console.Write(progress);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($"|{suffix}");
+                Console.ResetColor();
                 Console.SetCursorPosition(0, i + 2);
                 Console.Write(prefix);
             }
@@ -79,7 +91,11 @@ namespace ConsoleIncremental
             else
             {
                 int filledWidth = (int)(building.Progress * width);
-                return new string('#', filledWidth) + new string('-', width - filledWidth);
+                Console.ForegroundColor = ConsoleColor.Blue;
+                string filled = new string('#', filledWidth);
+                Console.ResetColor();
+                string empty = new string('-', width - filledWidth);
+                return filled + empty;
             }
         }
 
@@ -91,8 +107,18 @@ namespace ConsoleIncremental
             string result = "";
             for (int i = 0; i < width; i++)
             {
-                result += frame[(startIndex + i) % frameLength];
+                char c = frame[(startIndex + i) % frameLength];
+                if (c == '#')
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                }
+                else
+                {
+                    Console.ResetColor();
+                }
+                result += c;
             }
+            Console.ResetColor();
             return result;
         }
 
@@ -102,7 +128,11 @@ namespace ConsoleIncremental
             Console.SetCursorPosition(0, ConsoleHeight - 4);
             Console.Write(new string(' ', ConsoleWidth)); // Clear the line
             Console.SetCursorPosition(0, ConsoleHeight - 4);
-            Console.Write($"Buy 1 {selectedBuilding.Name.PadRight(20)} {selectedBuilding.Cost} Characters");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write($"Buy 1 {selectedBuilding.Name.PadRight(20)} ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write($"{selectedBuilding.Cost} Characters");
+            Console.ResetColor();
         }
 
         private void RenderCharacters(GameLogic game)
@@ -110,7 +140,9 @@ namespace ConsoleIncremental
             Console.SetCursorPosition(0, ConsoleHeight - 1);
             Console.Write(new string(' ', ConsoleWidth)); // Clear the line
             Console.SetCursorPosition(0, ConsoleHeight - 1);
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.Write($"Characters: {game.Characters}");
+            Console.ResetColor();
         }
     }
 }
