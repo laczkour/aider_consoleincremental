@@ -168,7 +168,7 @@ namespace ConsoleIncremental
             string prefix = game.IsConsoleReadKeySelected ? "[ " : "  ";
             string suffix = game.IsConsoleReadKeySelected ? " ]" : "  ";
             Console.Write(prefix);
-            Console.SetCursorPosition(23, 2);
+            Console.SetCursorPosition(56, 2);
             Console.Write(suffix);
 
             for (int i = 0; i < game.Buildings.Count; i++)
@@ -177,7 +177,7 @@ namespace ConsoleIncremental
                 prefix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? "[ " : "  ";
                 suffix = i == game.SelectedBuildingIndex && !game.IsConsoleReadKeySelected ? " ]" : "  ";
                 Console.Write(prefix);
-                Console.SetCursorPosition(23, i + 3);
+                Console.SetCursorPosition(56, i + 3);
                 Console.Write(suffix);
             }
         }
