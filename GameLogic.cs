@@ -13,12 +13,12 @@ namespace ConsoleIncremental
         {
             Buildings = new List<BuildingDto>
             {
-                new BuildingDto("Console.WriteLine", 8, 0.4, 10, 100),
-                new BuildingDto("Json.Parse", 2, 0.8, 50, 500),
-                new BuildingDto("ex.PrintStackTrace", 1, 0.4, 100, 1000),
-                new BuildingDto("Enumerable.Repeat", 1, 0, 200, 2000)
+                new BuildingDto("Console.WriteLine", 1, 0.4, 10, 100),
+                new BuildingDto("Json.Parse", 0, 0.8, 50, 500),
+                new BuildingDto("ex.PrintStackTrace", 0, 0.4, 100, 1000),
+                new BuildingDto("Enumerable.Repeat", 0, 0, 200, 2000)
             };
-            Characters = 21200;
+            Characters = 0;
             SelectedBuildingIndex = 1; // Json.Parse is selected initially
         }
 
